@@ -19,9 +19,10 @@ private:
     sf::RectangleShape player;
 public:
     explicit Player(sf::Vector2f position);
-    void update(float deltaTime);
-    void draw(sf::RenderWindow &window);
 
+    void update(float deltaTime);
+
+    void draw(sf::RenderWindow &window);
 };
 
 

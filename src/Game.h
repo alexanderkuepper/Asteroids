@@ -16,15 +16,21 @@ class Game {
 private:
     sf::RenderWindow window;
     sf::Event event{};
-    Player player{{200,200}};
+    Player player{{200, 200}};
     sf::Clock clock;
     float deltaTime{};
+
     void quitGame();
+
 public:
     bool isRunning = true;
+
     Game();
+
     void loadContent();
+
     void update();
+
     void draw();
 };
 

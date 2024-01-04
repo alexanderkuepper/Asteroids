@@ -12,6 +12,7 @@
 class InputManager {
 private:
     InputManager();
+
     static InputManager inputManager;
     sf::Vector2f direction;
 public:
@@ -20,7 +21,6 @@ public:
     static InputManager &get();
 
     sf::Vector2f getDirection();
-
 };
 
 

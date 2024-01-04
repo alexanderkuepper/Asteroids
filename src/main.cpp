@@ -1,10 +1,9 @@
 #include "Game.h"
 
-int main()
-{
+int main() {
     Game game{};
     game.loadContent();
-    while(game.isRunning) {
+    while (game.isRunning) {
         game.update();
         game.draw();
     }

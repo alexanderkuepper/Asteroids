@@ -14,20 +14,16 @@ InputManager &InputManager::get() {
 sf::Vector2f InputManager::getDirection() {
     direction.x = 0;
     direction.y = 0;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         direction.y = -1;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         direction.x = 1;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         direction.y = 1;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         direction.x = -1;
     }
     return direction;

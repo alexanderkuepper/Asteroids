@@ -5,12 +5,10 @@
 #include "Player.h"
 
 
-
 void Player::update(float deltaTime) {
     sf::Vector2f direction = InputManager::get().getDirection();
     this->position.x += speed * direction.x * deltaTime;
     this->position.y += speed * direction.y * deltaTime;
-
 }
 
 void Player::draw(sf::RenderWindow &window) {

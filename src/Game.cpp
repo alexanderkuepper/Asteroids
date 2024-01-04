@@ -11,7 +11,6 @@ Game::Game() {
 
 void Game::loadContent() {
 
-
 }
 
 void Game::update() {
@@ -28,8 +27,7 @@ void Game::draw() {
 }
 
 void Game::quitGame() {
-    while (window.pollEvent(event))
-    {
+    while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window.close();
             isRunning = false;
