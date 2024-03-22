@@ -17,6 +17,11 @@ add_executable(ShapeInvader src/main.cpp
         src/Player.h
         src/InputManager.cpp
         src/InputManager.h
+        src/Entity.h
+        src/Bullet.cpp
+        src/Bullet.h
+        src/Asteroid.cpp
+        src/Asteroid.h
 )
 target_link_libraries(ShapeInvader PRIVATE sfml-graphics)
 target_compile_features(ShapeInvader PRIVATE cxx_std_17)

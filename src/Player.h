@@ -10,19 +10,19 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "InputManager.h"
+#include "SFML/Graphics/Texture.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "Entity.h"
 
-class Player {
+class Player : public Entity {
 private:
-    sf::Vector2f position;
-    int delta{};
-    float speed = 200;
-    sf::RectangleShape player;
+    float speed = 300;
 public:
     explicit Player(sf::Vector2f position);
 
-    void update(float deltaTime);
+    void update(float deltaTime) override;
 
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) override;
 };
 
 

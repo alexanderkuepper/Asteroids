@@ -10,6 +10,8 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "Player.h"
+#include "Bullet.h"
+#include "Asteroid.h"
 
 
 class Game {
@@ -17,21 +19,27 @@ private:
     sf::RenderWindow window;
     sf::Event event{};
     Player player{{200, 200}};
+    std::vector<std::unique_ptr<Asteroid>> asteroids;
     sf::Clock clock;
-    float deltaTime{};
+    sf::Clock asteroidClock;
 
     void quitGame();
 
 public:
+    static const int width = 800;
+    static const int height = 600;
+
     bool isRunning = true;
 
     Game();
 
-    void loadContent();
-
     void update();
 
     void draw();
+
+    void generateAsteroid();
+
+    void removeAsteroid();
 };
 
 
