@@ -40,7 +40,6 @@ void Game::draw() {
             drawGameOverScreen();
             break;
     }
-
     window.display();
 }
 

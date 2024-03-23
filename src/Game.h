@@ -13,7 +13,6 @@
 #include "Bullet.h"
 #include "Asteroid.h"
 
-
 class Game {
 private:
     sf::RenderWindow window;
@@ -22,24 +21,15 @@ private:
     std::vector<std::unique_ptr<Asteroid>> asteroids;
     sf::Clock clock;
     sf::Clock asteroidClock;
-    enum GameState { gameMenueScreen, gamePlay, gameOverScreen };
+    enum GameState {
+        gameMenueScreen, gamePlay, gameOverScreen
+    };
     GameState gameState = GameState::gamePlay;
     float deltaTime{};
 
     void checkCloseButton();
+
     void quitGame();
-
-public:
-    static const int width = 800;
-    static const int height = 600;
-
-    bool isRunning = true;
-
-    Game();
-
-    void update();
-
-    void updateGamePlay();
 
     void updateMenueScreen();
 
@@ -56,6 +46,18 @@ public:
     void generateAsteroid();
 
     void removeAsteroid();
+
+public:
+    static const int width = 800;
+    static const int height = 600;
+
+    bool isRunning = true;
+
+    Game();
+
+    void update();
+
+    void updateGamePlay();
 };
 
 
