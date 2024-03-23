@@ -35,8 +35,6 @@ private:
 
     void updateGameOverScreen();
 
-    void draw();
-
     void drawGamePlay();
 
     void drawMenueScreen();
@@ -56,6 +54,8 @@ public:
     Game();
 
     void update();
+
+    void draw();
 
     void updateGamePlay();
 };
