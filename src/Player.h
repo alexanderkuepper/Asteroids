@@ -18,11 +18,13 @@ class Player : public Entity {
 private:
     float speed = 300;
 public:
-    explicit Player(sf::Vector2f position);
+    explicit Player();
 
     void update(float deltaTime);
 
     void draw(sf::RenderWindow &window);
+
+    void setPlayerStartPosition();
 
 };
 

@@ -21,6 +21,8 @@ public:
     static InputManager &get();
 
     sf::Vector2f getDirection();
+
+    static bool restart();
 };
 
 

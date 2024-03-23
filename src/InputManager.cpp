@@ -29,4 +29,11 @@ sf::Vector2f InputManager::getDirection() {
     return direction;
 }
 
+bool InputManager::restart() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        return true;
+    }
+    return false;
+}
+
 InputManager::InputManager() = default;

@@ -11,6 +11,7 @@
 class Asteroid : public Entity {
 private:
     float speed = 200;
+    sf::Vector2<float> getRandomPosition();
 public:
 
     Asteroid();

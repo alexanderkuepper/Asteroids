@@ -60,8 +60,8 @@ void Game::generateAsteroid() {
 
 void Game::removeAsteroid() {
     asteroids.erase(
-            std::remove_if(asteroids.begin(), asteroids.end(), [](auto &a) {
-                return a->position.y > height;
+            std::remove_if(asteroids.begin(), asteroids.end(), [](auto &asteroid) {
+                return asteroid->position.y > height;
             }), asteroids.end()
     );
 }
@@ -79,6 +79,8 @@ void Game::updateGamePlay() {
         asteroid->update(deltaTime);
         if (player.collisionCheck(*asteroid)) {
             gameState = GameState::gameOverScreen;
+            asteroids.clear();
+            player.setPlayerStartPosition();
         }
     }
 }
@@ -88,7 +90,9 @@ void Game::updateMenueScreen() {
 }
 
 void Game::updateGameOverScreen() {
-
+    if(InputManager::restart()) {
+        gameState = GameState::gamePlay;
+    }
 }
 
 void Game::drawGamePlay() {

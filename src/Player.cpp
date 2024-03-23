@@ -24,10 +24,15 @@ void Player::draw(sf::RenderWindow &window) {
     window.draw(sprite);
 }
 
-Player::Player(sf::Vector2f position) {
+Player::Player() {
     texture.loadFromFile("content/player.png");
     sprite.setTexture(texture);
-    this->position = position;
+    setPlayerStartPosition();
 }
 
-
+void Player::setPlayerStartPosition() {
+    float x = Game::width / 2.;
+    float y = Game::height / 2.;
+    this->position = sf::Vector2f{x,y};
+    sprite.setPosition(this->position);
+}

@@ -17,7 +17,7 @@ class Game {
 private:
     sf::RenderWindow window;
     sf::Event event{};
-    Player player{{200, 200}};
+    Player player{};
     std::vector<std::unique_ptr<Asteroid>> asteroids;
     sf::Clock clock;
     sf::Clock asteroidClock;
