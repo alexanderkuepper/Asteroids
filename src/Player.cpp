@@ -29,3 +29,5 @@ Player::Player(sf::Vector2f position) {
     sprite.setTexture(texture);
     this->position = position;
 }
+
+

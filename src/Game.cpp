@@ -2,7 +2,6 @@
 // Created by Alex on 02.01.2024.
 //
 
-#include <iostream>
 #include <memory>
 #include "Game.h"
 
@@ -18,10 +17,12 @@ void Game::update() {
     generateAsteroid();
     removeAsteroid();
     for (auto &asteroid: asteroids) {
-
         asteroid->update(deltaTime);
+        if(player.collisionCheck(*asteroid)) {
+            quitGame();
+        }
     }
-    quitGame();
+    checkCloseButton();
 }
 
 void Game::draw() {
@@ -33,17 +34,16 @@ void Game::draw() {
     window.display();
 }
 
-void Game::quitGame() {
+void Game::checkCloseButton() {
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            window.close();
-            isRunning = false;
+            quitGame();
         }
     }
 }
 
 void Game::generateAsteroid() {
-    if (asteroidClock.getElapsedTime().asSeconds() > 0.1) {
+    if (asteroidClock.getElapsedTime().asSeconds() > 1) {
         asteroids.push_back(std::make_unique<Asteroid>());
         asteroidClock.restart();
     }
@@ -55,4 +55,9 @@ void Game::removeAsteroid() {
                 return a->position.y > height;
             }), asteroids.end()
     );
+}
+
+void Game::quitGame() {
+    window.close();
+    isRunning = false;
 }

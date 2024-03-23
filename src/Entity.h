@@ -16,9 +16,7 @@ public:
     sf::Texture texture;
     sf::Sprite sprite;
 
-    virtual void update(float) = 0;
-
-    virtual void draw(sf::RenderWindow &) = 0;
+    bool collisionCheck(const Entity&) const;
 };
 
 #endif //SHAPEINVADER_ENTITY_H

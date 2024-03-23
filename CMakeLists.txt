@@ -22,6 +22,7 @@ add_executable(ShapeInvader src/main.cpp
         src/Bullet.h
         src/Asteroid.cpp
         src/Asteroid.h
+        src/Entity.cpp
 )
 target_link_libraries(ShapeInvader PRIVATE sfml-graphics)
 target_compile_features(ShapeInvader PRIVATE cxx_std_17)

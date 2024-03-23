@@ -22,7 +22,9 @@ private:
     std::vector<std::unique_ptr<Asteroid>> asteroids;
     sf::Clock clock;
     sf::Clock asteroidClock;
+    enum Color { startScreen, gamePlay, gameOverScreen };
 
+    void checkCloseButton();
     void quitGame();
 
 public:

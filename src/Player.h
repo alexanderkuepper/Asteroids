@@ -20,9 +20,10 @@ private:
 public:
     explicit Player(sf::Vector2f position);
 
-    void update(float deltaTime) override;
+    void update(float deltaTime);
 
-    void draw(sf::RenderWindow &window) override;
+    void draw(sf::RenderWindow &window);
+
 };
 
 
