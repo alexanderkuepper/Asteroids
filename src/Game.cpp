@@ -6,31 +6,41 @@
 #include "Game.h"
 
 Game::Game() {
-    window.create(sf::VideoMode(width, height), "Shape Invader");
+    window.create(sf::VideoMode{width, height}, "Shape Invader");
     window.setFramerateLimit(100);
 }
 
 void Game::update() {
-    float deltaTime = clock.getElapsedTime().asSeconds();
+    deltaTime = clock.getElapsedTime().asSeconds();
     clock.restart();
-    player.update(deltaTime);
-    generateAsteroid();
-    removeAsteroid();
-    for (auto &asteroid: asteroids) {
-        asteroid->update(deltaTime);
-        if(player.collisionCheck(*asteroid)) {
-            quitGame();
-        }
+    switch (gameState) {
+        case GameState::gameMenueScreen:
+            updateMenueScreen();
+            break;
+        case GameState::gamePlay:
+            updateGamePlay();
+            break;
+        case GameState::gameOverScreen:
+            updateGameOverScreen();
+            break;
     }
     checkCloseButton();
 }
 
 void Game::draw() {
     window.clear();
-    player.draw(window);
-    for (auto &asteroid: asteroids) {
-        asteroid->draw(window);
+    switch (gameState) {
+        case GameState::gameMenueScreen:
+            drawMenueScreen();
+            break;
+        case GameState::gamePlay:
+            drawGamePlay();
+            break;
+        case GameState::gameOverScreen:
+            drawGameOverScreen();
+            break;
     }
+
     window.display();
 }
 
@@ -60,4 +70,39 @@ void Game::removeAsteroid() {
 void Game::quitGame() {
     window.close();
     isRunning = false;
+}
+
+void Game::updateGamePlay() {
+    player.update(deltaTime);
+    generateAsteroid();
+    removeAsteroid();
+    for (auto &asteroid: asteroids) {
+        asteroid->update(deltaTime);
+        if (player.collisionCheck(*asteroid)) {
+            gameState = GameState::gameOverScreen;
+        }
+    }
+}
+
+void Game::updateMenueScreen() {
+
+}
+
+void Game::updateGameOverScreen() {
+
+}
+
+void Game::drawGamePlay() {
+    player.draw(window);
+    for (auto &asteroid: asteroids) {
+        asteroid->draw(window);
+    }
+}
+
+void Game::drawMenueScreen() {
+
+}
+
+void Game::drawGameOverScreen() {
+
 }
