@@ -9,7 +9,12 @@
 #include "Entity.h"
 
 class Bullet : public Entity {
+private:
+    float speed = 200.;
 public:
+
+    explicit Bullet(sf::Vector2f position);
+
     void update(float deltaTime);
 
     void draw(sf::RenderWindow &window);

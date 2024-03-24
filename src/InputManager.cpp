@@ -36,4 +36,14 @@ bool InputManager::restart() {
     return false;
 }
 
+bool InputManager::shoot() {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !fireBullet) {
+        fireBullet = true;
+        return true;
+    } else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && fireBullet) {
+        fireBullet = false;
+    }
+    return false;
+}
+
 InputManager::InputManager() = default;

@@ -3,6 +3,7 @@
 //
 
 #include <memory>
+#include <iostream>
 #include "Game.h"
 
 Game::Game() {
@@ -52,19 +53,28 @@ void Game::checkCloseButton() {
 }
 
 void Game::generateAsteroid() {
-    if (asteroidClock.getElapsedTime().asSeconds() > 1) {
+    if (asteroidClock.getElapsedTime().asSeconds() > 0.1) {
         asteroids.push_back(std::make_unique<Asteroid>());
         asteroidClock.restart();
     }
 }
 
-void Game::removeAsteroid() {
+void Game::clearOffscreenAsteroids() {
     asteroids.erase(
             std::remove_if(asteroids.begin(), asteroids.end(), [](auto &asteroid) {
                 return asteroid->position.y > height;
             }), asteroids.end()
     );
 }
+
+void Game::clearOffscreenBullets() {
+    bullets.erase(
+            std::remove_if(bullets.begin(), bullets.end(), [](auto &bullet) {
+                return bullet->position.y < 0;
+            }), bullets.end()
+    );
+}
+
 
 void Game::quitGame() {
     window.close();
@@ -74,15 +84,26 @@ void Game::quitGame() {
 void Game::updateGamePlay() {
     player.update(deltaTime);
     generateAsteroid();
-    removeAsteroid();
+    clearOffscreenAsteroids();
+    clearOffscreenBullets();
+    if(InputManager::get().shoot()) {
+        shootBullet();
+    }
     for (auto &asteroid: asteroids) {
         asteroid->update(deltaTime);
         if (player.collisionCheck(*asteroid)) {
             gameState = GameState::gameOverScreen;
             asteroids.clear();
+            bullets.clear();
             player.setPlayerStartPosition();
         }
     }
+    for (auto &bullet : bullets) {
+        bullet->update(deltaTime);
+    }
+    std::cout << bullets.size() << std::endl;
+    // Todo delete asteroids if collision detected with bullet
+
 }
 
 void Game::updateMenueScreen() {
@@ -100,6 +121,9 @@ void Game::drawGamePlay() {
     for (auto &asteroid: asteroids) {
         asteroid->draw(window);
     }
+    for (auto &bullet : bullets) {
+        bullet->draw(window);
+    }
 }
 
 void Game::drawMenueScreen() {
@@ -108,4 +132,12 @@ void Game::drawMenueScreen() {
 
 void Game::drawGameOverScreen() {
 
+}
+
+void Game::shootBullet() {
+    bullets.push_back(std::make_unique<Bullet>(getShootPosition()));
+}
+
+sf::Vector2f Game::getShootPosition() {
+    return sf::Vector2f{player.position.x + player.sprite.getGlobalBounds().width / 2,player.position.y};
 }

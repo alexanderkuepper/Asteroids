@@ -15,6 +15,7 @@ private:
 
     static InputManager inputManager;
     sf::Vector2f direction;
+    bool fireBullet = false;
 public:
     InputManager(const InputManager &) = delete;
 
@@ -23,6 +24,8 @@ public:
     sf::Vector2f getDirection();
 
     static bool restart();
+
+    bool shoot();
 };
 
 
