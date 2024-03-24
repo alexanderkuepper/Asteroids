@@ -103,30 +103,7 @@ void Game::updateGamePlay() {
     }
 
     // Todo delete asteroids if collision detected with bullet
-    /*auto asteroidIter = asteroids.begin();
-    auto bulletIter = bullets.begin();
-    while(asteroidIter != asteroids.end()) {
-        while(bulletIter != bullets.end()) {
-            if((*bulletIter)->collisionCheck(**asteroidIter)) {
-                bullets.erase(bulletIter);
-                asteroids.erase(asteroidIter);
-                return;
-            }
-            bulletIter++;
-        }
-      asteroidIter++;
-    }*/
 
-    asteroids.erase(
-            std::remove_if(asteroids.begin(), asteroids.end(), [this](auto &asteroid) {
-                for(auto &bullet : bullets) {
-                    if(asteroid->collisionCheck(*bullet)) {
-                        return true;
-                    }
-                }
-                return false;
-            }), asteroids.end()
-    );
 }
 
 void Game::updateMenueScreen() {
