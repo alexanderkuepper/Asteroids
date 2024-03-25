@@ -64,9 +64,9 @@ public:
 
     sf::Vector2f getShootPosition();
 
-    void clearOffscreenEntities(std::vector<std::unique_ptr<Entity>> &entity);
-
     void clearOffscreenBullets();
+
+    void removeCollidedEntities();
 };
 
 

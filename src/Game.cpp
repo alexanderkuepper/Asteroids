@@ -86,7 +86,7 @@ void Game::updateGamePlay() {
     generateAsteroid();
     clearOffscreenAsteroids();
     clearOffscreenBullets();
-    if(InputManager::get().shoot()) {
+    if (InputManager::get().shoot()) {
         shootBullet();
     }
     for (auto &asteroid: asteroids) {
@@ -98,12 +98,10 @@ void Game::updateGamePlay() {
             player.setPlayerStartPosition();
         }
     }
-    for (auto &bullet : bullets) {
+    for (auto &bullet: bullets) {
         bullet->update(deltaTime);
     }
-
-    // Todo delete asteroids if collision detected with bullet
-
+    removeCollidedEntities();
 }
 
 void Game::updateMenueScreen() {
@@ -111,7 +109,7 @@ void Game::updateMenueScreen() {
 }
 
 void Game::updateGameOverScreen() {
-    if(InputManager::restart()) {
+    if (InputManager::restart()) {
         gameState = GameState::gamePlay;
     }
 }
@@ -121,7 +119,7 @@ void Game::drawGamePlay() {
     for (auto &asteroid: asteroids) {
         asteroid->draw(window);
     }
-    for (auto &bullet : bullets) {
+    for (auto &bullet: bullets) {
         bullet->draw(window);
     }
 }
@@ -139,5 +137,19 @@ void Game::shootBullet() {
 }
 
 sf::Vector2f Game::getShootPosition() {
-    return sf::Vector2f{player.position.x + player.sprite.getGlobalBounds().width / 2,player.position.y};
+    return sf::Vector2f{player.position.x + player.sprite.getGlobalBounds().width / 2, player.position.y};
+}
+
+void Game::removeCollidedEntities() {
+    for (auto asteroidIter = asteroids.begin(); asteroidIter != asteroids.end();) {
+        for (auto bulletIter = bullets.begin(); bulletIter != bullets.end();) {
+            if ((*asteroidIter)->collisionCheck(**bulletIter)) {
+                asteroidIter = asteroids.erase(asteroidIter);
+                bulletIter = bullets.erase(bulletIter);
+            } else {
+                bulletIter++;
+            }
+        }
+        asteroidIter++;
+    }
 }
