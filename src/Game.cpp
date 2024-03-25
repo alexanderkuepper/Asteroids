@@ -141,15 +141,13 @@ sf::Vector2f Game::getShootPosition() {
 }
 
 void Game::removeCollidedEntities() {
-    for (auto asteroidIter = asteroids.begin(); asteroidIter != asteroids.end();) {
-        for (auto bulletIter = bullets.begin(); bulletIter != bullets.end();) {
+    for (auto asteroidIter = asteroids.begin(); asteroidIter != asteroids.end(); ++asteroidIter) {
+        for (auto bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
             if ((*asteroidIter)->collisionCheck(**bulletIter)) {
-                asteroidIter = asteroids.erase(asteroidIter);
-                bulletIter = bullets.erase(bulletIter);
-            } else {
-                bulletIter++;
+                asteroids.erase(asteroidIter);
+                bullets.erase(bulletIter);
+                return;
             }
         }
-        asteroidIter++;
     }
 }
