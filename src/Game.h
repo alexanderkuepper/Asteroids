@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Text.hpp"
 
 class Game {
 private:
@@ -22,6 +24,8 @@ private:
     std::vector<std::unique_ptr<Bullet>> bullets;
     sf::Clock clock;
     sf::Clock asteroidClock;
+    sf::Font font;
+    sf::Text text;
     enum GameState {
         gameMenueScreen, gamePlay, gameOverScreen
     };
@@ -45,6 +49,8 @@ private:
     void generateAsteroid();
 
     void clearOffscreenAsteroids();
+
+    void setText(const std::string& text);
 
 public:
     static const int width = 800;

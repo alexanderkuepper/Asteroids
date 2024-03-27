@@ -9,6 +9,8 @@
 Game::Game() {
     window.create(sf::VideoMode{width, height}, "Shape Invader");
     window.setFramerateLimit(100);
+    font.loadFromFile("content/font.ttf");
+    text.setFont(font);
 }
 
 void Game::update() {
@@ -112,6 +114,7 @@ void Game::updateGameOverScreen() {
     if (InputManager::restart()) {
         gameState = GameState::gamePlay;
     }
+    setText("Game Over\n\tPress A");
 }
 
 void Game::drawGamePlay() {
@@ -129,7 +132,7 @@ void Game::drawMenueScreen() {
 }
 
 void Game::drawGameOverScreen() {
-
+    window.draw(text);
 }
 
 void Game::shootBullet() {
@@ -150,4 +153,12 @@ void Game::removeCollidedEntities() {
             }
         }
     }
+}
+
+void Game::setText(const std::string& textString) {
+    text.setString(textString);
+    sf::FloatRect textRect = text.getLocalBounds();
+    text.setOrigin(textRect.left + textRect.width / 2.0f,
+                   textRect.top + textRect.height / 2.0f);
+    text.setPosition(width / 2.0f, height / 2.0f);
 }
