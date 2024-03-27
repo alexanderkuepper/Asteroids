@@ -107,7 +107,10 @@ void Game::updateGamePlay() {
 }
 
 void Game::updateMenueScreen() {
-
+    if (InputManager::restart()) {
+        gameState = GameState::gamePlay;
+    }
+    setText("Game Start\n\tPress A");
 }
 
 void Game::updateGameOverScreen() {
@@ -128,7 +131,7 @@ void Game::drawGamePlay() {
 }
 
 void Game::drawMenueScreen() {
-
+    window.draw(text);
 }
 
 void Game::drawGameOverScreen() {

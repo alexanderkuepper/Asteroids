@@ -29,7 +29,7 @@ private:
     enum GameState {
         gameMenueScreen, gamePlay, gameOverScreen
     };
-    GameState gameState = GameState::gamePlay;
+    GameState gameState = GameState::gameMenueScreen;
     float deltaTime{};
 
     void checkCloseButton();
