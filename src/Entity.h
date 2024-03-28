@@ -16,6 +16,8 @@ public:
     sf::Texture texture;
     sf::Sprite sprite;
 
+    virtual ~Entity();
+
     bool collisionCheck(const Entity&) const;
 };
 

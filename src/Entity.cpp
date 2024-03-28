@@ -7,3 +7,5 @@
 bool Entity::collisionCheck(const Entity& entity) const {
     return this->sprite.getGlobalBounds().intersects(entity.sprite.getGlobalBounds());
 }
+
+Entity::~Entity() = default;

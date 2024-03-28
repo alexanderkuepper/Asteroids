@@ -18,8 +18,7 @@ private:
     sf::RenderWindow window;
     sf::Event event{};
     Player player{};
-    std::vector<std::unique_ptr<Asteroid>> asteroids;
-    std::vector<std::unique_ptr<Bullet>> bullets;
+    std::vector<std::unique_ptr<Entity>> entities;
     sf::Clock clock;
     sf::Clock asteroidClock;
     enum GameState {
@@ -44,7 +43,7 @@ private:
 
     void generateAsteroid();
 
-    void clearOffscreenAsteroids();
+    void clearOffscreenEntities();
 
 public:
     static const int width = 800;
@@ -63,8 +62,6 @@ public:
     void shootBullet();
 
     sf::Vector2f getShootPosition();
-
-    void clearOffscreenBullets();
 
     void removeCollidedEntities();
 };
