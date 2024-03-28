@@ -81,18 +81,21 @@ void Game::quitGame() {
 }
 
 void Game::updateGamePlay() {
-    player.update(deltaTime);
     generateAsteroid();
     clearOffscreenEntities();
     if (InputManager::get().shoot()) {
         shootBullet();
     }
     for (auto &entity: entities) {
+        if (auto *player  = dynamic_cast<Player *>(entity.get())) {
+            player->update(deltaTime);
+        }
         if (auto *asteroid = dynamic_cast<Asteroid *>(entity.get())) {
             asteroid->update(deltaTime);
             if (entities[0]->collisionCheck(*asteroid)) {
                 gameState = GameState::gameOverScreen;
                 entities.clear();
+                return;
             }
         }
         if (auto *bullet = dynamic_cast<Bullet *>(entity.get())) {
@@ -106,6 +109,7 @@ void Game::updateMenueScreen() {
     if (InputManager::restart()) {
         gameState = GameState::gamePlay;
     }
+    entities.push_back(std::make_unique<Player>());
     setText("Game Start\n\tPress A");
 }
 
@@ -113,16 +117,18 @@ void Game::updateGameOverScreen() {
     if (InputManager::restart()) {
         gameState = GameState::gamePlay;
     }
+    entities.push_back(std::make_unique<Player>());
     setText("Game Over\n\tPress A");
 }
 
 void Game::drawGamePlay() {
-    player.draw(window);
     for (auto &entity: entities) {
         if (auto *asteroid = dynamic_cast<Asteroid *>(entity.get())) {
             asteroid->draw(window);
         } else if (auto *bullet = dynamic_cast<Bullet *>(entity.get())) {
             bullet->draw(window);
+        } else if (auto *player = dynamic_cast<Player *>(entity.get())) {
+            player->draw(window);
         }
     }
 }
@@ -140,7 +146,7 @@ void Game::shootBullet() {
 }
 
 sf::Vector2f Game::getShootPosition() {
-    return sf::Vector2f{player.position.x + player.sprite.getGlobalBounds().width / 2, player.position.y};
+    return sf::Vector2f{entities[0]->position.x + entities[0]->sprite.getGlobalBounds().width / 2, entities[0]->position.y};
 }
 
 void Game::removeCollidedEntities() {

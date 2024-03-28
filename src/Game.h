@@ -19,7 +19,6 @@ class Game {
 private:
     sf::RenderWindow window;
     sf::Event event{};
-    Player player{};
     std::vector<std::unique_ptr<Entity>> entities;
     sf::Clock clock;
     sf::Clock asteroidClock;
