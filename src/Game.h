@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Text.hpp"
 
 class Game {
 private:
@@ -21,10 +23,12 @@ private:
     std::vector<std::unique_ptr<Entity>> entities;
     sf::Clock clock;
     sf::Clock asteroidClock;
+    sf::Font font;
+    sf::Text text;
     enum GameState {
         gameMenueScreen, gamePlay, gameOverScreen
     };
-    GameState gameState = GameState::gamePlay;
+    GameState gameState = GameState::gameMenueScreen;
     float deltaTime{};
 
     void checkCloseButton();
@@ -44,6 +48,8 @@ private:
     void generateAsteroid();
 
     void clearOffscreenEntities();
+
+    void setText(const std::string& text);
 
 public:
     static const int width = 800;
