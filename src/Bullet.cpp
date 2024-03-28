@@ -19,3 +19,7 @@ Bullet::Bullet(sf::Vector2f position) {
     this->position = position;
     sprite.setPosition(position);
 }
+
+Type Bullet::getType() {
+    return Type::BULLET;
+}

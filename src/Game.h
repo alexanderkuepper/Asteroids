@@ -22,6 +22,7 @@ private:
     Player player{};
     std::vector<std::unique_ptr<Asteroid>> asteroids;
     std::vector<std::unique_ptr<Bullet>> bullets;
+    std::vector<std::unique_ptr<Entity>> entities;
     sf::Clock clock;
     sf::Clock asteroidClock;
     sf::Font font;
@@ -48,7 +49,7 @@ private:
 
     void generateAsteroid();
 
-    void clearOffscreenAsteroids();
+    void clearOffscreenEntities();
 
     void setText(const std::string& text);
 
@@ -69,8 +70,6 @@ public:
     void shootBullet();
 
     sf::Vector2f getShootPosition();
-
-    void clearOffscreenBullets();
 
     void removeCollidedEntities();
 };

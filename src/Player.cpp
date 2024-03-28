@@ -36,3 +36,7 @@ void Player::setPlayerStartPosition() {
     this->position = sf::Vector2f{x,y};
     sprite.setPosition(this->position);
 }
+
+Type Player::getType() {
+    return Type::PLAYER;
+}

@@ -20,9 +20,11 @@ private:
 public:
     explicit Player();
 
-    void update(float deltaTime);
+    void update(float deltaTime) override;
 
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) override;
+
+    Type getType() override;
 
     void setPlayerStartPosition();
 

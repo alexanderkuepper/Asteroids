@@ -56,26 +56,27 @@ void Game::checkCloseButton() {
 
 void Game::generateAsteroid() {
     if (asteroidClock.getElapsedTime().asSeconds() > 0.1) {
-        asteroids.push_back(std::make_unique<Asteroid>());
+        entities.push_back(std::make_unique<Asteroid>());
         asteroidClock.restart();
     }
 }
 
-void Game::clearOffscreenAsteroids() {
-    asteroids.erase(
-            std::remove_if(asteroids.begin(), asteroids.end(), [](auto &asteroid) {
-                return asteroid->position.y > height;
-            }), asteroids.end()
+void Game::clearOffscreenEntities() {
+    entities.erase(
+            std::remove_if(entities.begin(), entities.end(), [](auto &entity) {
+                if(entity->getType() == Type::ASTEROID) {
+                    return entity->position.y > height;
+                } else if(entity->getType() == Type::BULLET) {
+                    return entity->position.y < 0;
+                } else {
+                    return false;
+                }
+
+            }), entities.end()
     );
 }
 
-void Game::clearOffscreenBullets() {
-    bullets.erase(
-            std::remove_if(bullets.begin(), bullets.end(), [](auto &bullet) {
-                return bullet->position.y < 0;
-            }), bullets.end()
-    );
-}
+
 
 
 void Game::quitGame() {
@@ -86,22 +87,18 @@ void Game::quitGame() {
 void Game::updateGamePlay() {
     player.update(deltaTime);
     generateAsteroid();
-    clearOffscreenAsteroids();
-    clearOffscreenBullets();
+    clearOffscreenEntities();
     if (InputManager::get().shoot()) {
         shootBullet();
     }
-    for (auto &asteroid: asteroids) {
-        asteroid->update(deltaTime);
-        if (player.collisionCheck(*asteroid)) {
+    for (auto &entity: entities) {
+        entity->update(deltaTime);
+        if (entity->getType() == Type::ASTEROID && player.collisionCheck(*entity)) {
             gameState = GameState::gameOverScreen;
-            asteroids.clear();
-            bullets.clear();
+            entities.clear();
             player.setPlayerStartPosition();
+            return;
         }
-    }
-    for (auto &bullet: bullets) {
-        bullet->update(deltaTime);
     }
     removeCollidedEntities();
 }
@@ -122,11 +119,8 @@ void Game::updateGameOverScreen() {
 
 void Game::drawGamePlay() {
     player.draw(window);
-    for (auto &asteroid: asteroids) {
-        asteroid->draw(window);
-    }
-    for (auto &bullet: bullets) {
-        bullet->draw(window);
+    for (auto &entity: entities) {
+        entity->draw(window);
     }
 }
 
@@ -139,7 +133,7 @@ void Game::drawGameOverScreen() {
 }
 
 void Game::shootBullet() {
-    bullets.push_back(std::make_unique<Bullet>(getShootPosition()));
+    entities.push_back(std::make_unique<Bullet>(getShootPosition()));
 }
 
 sf::Vector2f Game::getShootPosition() {
@@ -147,11 +141,11 @@ sf::Vector2f Game::getShootPosition() {
 }
 
 void Game::removeCollidedEntities() {
-    for (auto asteroidIter = asteroids.begin(); asteroidIter != asteroids.end(); ++asteroidIter) {
-        for (auto bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
-            if ((*asteroidIter)->collisionCheck(**bulletIter)) {
-                asteroids.erase(asteroidIter);
-                bullets.erase(bulletIter);
+    for (auto asteroidIter = entities.begin(); asteroidIter != entities.end(); ++asteroidIter) {
+        for (auto bulletIter = entities.begin(); bulletIter != entities.end(); ++bulletIter) {
+            if ((*asteroidIter)->getType() != (*bulletIter)->getType() && (*asteroidIter)->collisionCheck(**bulletIter)) {
+                entities.erase(asteroidIter);
+                //entities.erase(bulletIter);
                 return;
             }
         }
@@ -165,3 +159,5 @@ void Game::setText(const std::string& textString) {
                    textRect.top + textRect.height / 2.0f);
     text.setPosition(width / 2.0f, height / 2.0f);
 }
+
+

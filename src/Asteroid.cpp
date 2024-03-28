@@ -25,3 +25,7 @@ sf::Vector2<float> Asteroid::getRandomPosition() {
     float x = std::rand() % Game::width - sprite.getTexture()->getSize().x;
     return sf::Vector2f{x,-60};
 }
+
+Type Asteroid::getType() {
+    return Type::ASTEROID;
+}
