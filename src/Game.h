@@ -20,8 +20,6 @@ private:
     sf::RenderWindow window;
     sf::Event event{};
     Player player{};
-    std::vector<std::unique_ptr<Asteroid>> asteroids;
-    std::vector<std::unique_ptr<Bullet>> bullets;
     std::vector<std::unique_ptr<Entity>> entities;
     sf::Clock clock;
     sf::Clock asteroidClock;
