@@ -144,8 +144,9 @@ void Game::removeCollidedEntities() {
     for (auto asteroidIter = entities.begin(); asteroidIter != entities.end(); ++asteroidIter) {
         for (auto bulletIter = entities.begin(); bulletIter != entities.end(); ++bulletIter) {
             if ((*asteroidIter)->getType() != (*bulletIter)->getType() && (*asteroidIter)->collisionCheck(**bulletIter)) {
-                entities.erase(asteroidIter);
-                //entities.erase(bulletIter);
+                std::iter_swap(bulletIter, entities.end() - 2);
+                std::iter_swap(asteroidIter, entities.end() - 1);
+                entities.erase(entities.end() -2, entities.end());
                 return;
             }
         }
