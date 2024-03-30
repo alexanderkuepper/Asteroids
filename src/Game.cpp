@@ -64,9 +64,9 @@ void Game::generateAsteroid() {
 void Game::clearOffscreenEntities() {
     entities.erase(
             std::remove_if(entities.begin(), entities.end(), [](auto &entity) {
-                if(entity->getType() == Type::ASTEROID) {
+                if (entity->getType() == Type::ASTEROID) {
                     return entity->position.y > height;
-                } else if(entity->getType() == Type::BULLET) {
+                } else if (entity->getType() == Type::BULLET) {
                     return entity->position.y < 0;
                 } else {
                     return false;
@@ -75,8 +75,6 @@ void Game::clearOffscreenEntities() {
             }), entities.end()
     );
 }
-
-
 
 
 void Game::quitGame() {
@@ -141,19 +139,20 @@ sf::Vector2f Game::getShootPosition() {
 }
 
 void Game::removeCollidedEntities() {
-    for (auto asteroidIter = entities.begin(); asteroidIter != entities.end(); ++asteroidIter) {
-        for (auto bulletIter = entities.begin(); bulletIter != entities.end(); ++bulletIter) {
-            if ((*asteroidIter)->getType() != (*bulletIter)->getType() && (*asteroidIter)->collisionCheck(**bulletIter)) {
-                std::iter_swap(bulletIter, entities.end() - 2);
-                std::iter_swap(asteroidIter, entities.end() - 1);
-                entities.erase(entities.end() -2, entities.end());
+    for (auto entityIterOne = entities.begin(); entityIterOne != entities.end(); ++entityIterOne) {
+        for (auto entityIterTwo = entities.begin(); entityIterTwo != entities.end(); ++entityIterTwo) {
+            if ((*entityIterOne)->getType() != (*entityIterTwo)->getType() &&
+                (*entityIterOne)->collisionCheck(**entityIterTwo)) {
+                std::iter_swap(entityIterTwo, entities.end() - 2);
+                std::iter_swap(entityIterOne, entities.end() - 1);
+                entities.erase(entities.end() - 2, entities.end());
                 return;
             }
         }
     }
 }
 
-void Game::setText(const std::string& textString) {
+void Game::setText(const std::string &textString) {
     text.setString(textString);
     sf::FloatRect textRect = text.getLocalBounds();
     text.setOrigin(textRect.left + textRect.width / 2.0f,
